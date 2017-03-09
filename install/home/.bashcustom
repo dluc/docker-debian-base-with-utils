@@ -1,0 +1,61 @@
+customize_bash() {
+
+    export PATH="$HOME/bin:$PATH"
+
+    eval `dircolors -b`
+
+    alias -- -='cd -'
+    alias ..='cd ..'
+    alias cp='cp -ia'
+    alias df='df -h'
+    alias edit='mcedit -d -C editnormal=lightgray,black'
+    alias grep='grep --color=auto'
+    alias howtofindgrep='echo "find . -name *.FILETYPE -exec grep -Hn SOMETEXT {} \; 2> /dev/null | less -S"'
+    alias l='ls --color=auto -lAF'
+    alias ll='l|less'
+    alias ls='ls --color=auto'
+    alias mkdir='mkdir -p'
+    alias mv='mv -i'
+    alias nano='nano -cES --tabsize=4'
+    alias rm='rm -i'
+    alias screen='/usr/bin/screen -a -h 10000 -R'
+
+    export HISTCONTROL=ignorespace:ignoredups
+    export HISTTIMEFORMAT='%F %T '
+    export HISTSIZE=32767
+    export HISTFILESIZE=3276700
+    shopt -s histappend
+
+    export PS1="\n\e[32;44;1m \h\e[37m - [\u] \e[0m\e[30;47m  (\t)  \e[0m\n\w :# "
+
+    # Disable terminal beep (where supported)
+    setterm -blength 0 2> /dev/null
+
+    # https://www.gnu.org/software/bash/manual/html_node/The-Shopt-Builtin.html
+    shopt -s autocd
+    shopt -s cdspell
+    shopt -s checkjobs
+    shopt -s checkwinsize
+    shopt -s cmdhist
+
+    # Customize git if installed
+    which git &> /dev/null
+    if [ $? -eq 0 ]
+    then
+        git config --global alias.st status
+        git config --global alias.co checkout
+        git config --global alias.ci commit
+        git config --global alias.br branch
+        git config --global alias.lg "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative"
+
+        alias git.loggraph="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative"
+        alias git.logoneline="git log --pretty=oneline"
+        alias git.logstat="git log --stat"
+        alias git.stashshow="git stash show --patience"
+    fi
+}
+
+# Customize Bash only during an interactive shell
+if [ ! -z "$PS1" ]; then
+    customize_bash
+fi

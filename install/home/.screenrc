@@ -1,0 +1,44 @@
+setenv myTOP 'htop'
+escape ``
+startup_message       off             # default: on
+vbell                 on
+defnonblock 5
+blankerprg rain -d 100
+idle 120 blanker
+termcapinfo xterm* OL=10000
+termcapinfo xterm 'VR=\E[?5h:VN=\E[?5l'
+termcapinfo xterm 'k1=\E[11~:k2=\E[12~:k3=\E[13~:k4=\E[14~'
+termcapinfo xterm 'kh=\EOH:kI=\E[2~:kD=\E[3~:kH=\EOF:kP=\E[5~:kN=\E[6~'
+termcapinfo xterm 'hs:ts=\E]2;:fs=\007:ds=\E]2;screen\007'
+defscrollback         4000            # default: 100
+silencewait           15              # default: 30
+hardcopydir           $HOME/.hardcopy
+shell                 bash
+caption always "%0=%{+b rk}%H %{bk}| %0L=%{mk}%>%-Lw%{= BW}%n%f* %t%{-}%+Lw%L>%?(%u)%? %{bk}|%>%=%{Yk} %=%C%A %Y.%m.%d %{bk}%100="
+hardstatus on
+hardstatus alwayslastline "%0=%{kB}| %{kw}%h %{kB}|%=%{kR}Load: %l%100="
+sorendition 10 99 # default!
+activity              "activity in %n (%t) [%w:%s]~"
+bell                  "bell     in %n (%t) [%w:%s]~"
+pow_detach_msg "Screen session of \$LOGNAME \$:cr:\$:nl:ended."
+vbell_msg             " *beep* *beep* "
+bind .
+bind ^\
+bind \\
+bind k
+bind ^k
+bind .
+bind ^\
+bind \\
+bind ^h
+bind h  hardcopy
+bind 'K' kill
+bind '}' history
+bind P paste .
+register [ "\033:se noai\015a"
+register ] "\033:se ai\015a"
+bind ^] paste [.]
+bind X lockscreen
+bind H screen -t $myTOP         1       $myTOP
+msgwait 2
+echo "*** BACK TO VIRTUALITY ***"
