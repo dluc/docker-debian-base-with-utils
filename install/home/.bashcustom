@@ -40,18 +40,15 @@ customize_bash() {
 
     # Customize git if installed
     which git &> /dev/null
-    if [ $? -eq 0 ]
-    then
+    if [ $? -eq 0 ]; then
         git config --global alias.st status
         git config --global alias.co checkout
         git config --global alias.ci commit
         git config --global alias.br branch
         git config --global alias.lg "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative"
-
-        alias git.loggraph="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative"
-        alias git.logoneline="git log --pretty=oneline"
-        alias git.logstat="git log --stat"
-        alias git.stashshow="git stash show --patience"
+        git config --global alias.lg1 "log --pretty=oneline"
+        git config --global alias.lgs "log --stat"
+        git config --global alias.sts "stash show --patience"
     fi
 }
 
